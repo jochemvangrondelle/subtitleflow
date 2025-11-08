@@ -1,0 +1,37 @@
+# Label PRs based on changed files
+cli:
+  - subtitleflow/cli/**/*
+
+common:
+  - subtitleflow/common/**/*
+
+correct:
+  - subtitleflow/correct/**/*
+
+translate:
+  - subtitleflow/translate/**/*
+
+transcribe:
+  - subtitleflow/transcribe/**/*
+
+tests:
+  - tests/**/*
+  - conftest.py
+
+docs:
+  - docs/**/*
+  - mkdocs.yml
+  - README.md
+
+ci:
+  - .github/workflows/**/*
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .pre-commit-config.yaml
+  - tox.ini
+  - Makefile
+
+dependencies:
+  - pyproject.toml
+  - uv.lock
+  - requirements*.txt

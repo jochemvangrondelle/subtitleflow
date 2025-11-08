@@ -38,7 +38,7 @@ WhisperX requires CUDA for GPU acceleration:
     ```bash
     # Check GPU
     lspci | grep -i nvidia
-    
+
     # Install drivers (adjust version as needed)
     sudo apt update
     sudo apt install -y nvidia-driver-535  # or latest version
@@ -61,7 +61,7 @@ WhisperX requires CUDA for GPU acceleration:
     # Download CUDA 11.8 (or latest compatible version)
     wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
     sudo sh cuda_11.8.0_520.61.05_linux.run
-    
+
     # Add to PATH
     echo 'export PATH=/usr/local/cuda-11.8/bin:$PATH' >> ~/.bashrc
     echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
@@ -152,7 +152,7 @@ ollama pull gemma3:4b        # 2GB VRAM
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone the repository
-git clone https://github.com/jochemvangrondelle/subs.git
+git clone https://github.com/jochemvangrondelle/subtitleflow.git
 cd subs
 
 # Create virtual environment and install
@@ -164,7 +164,7 @@ uv pip install -e .
 ### Using pip
 
 ```bash
-git clone https://github.com/jochemvangrondelle/subs.git
+git clone https://github.com/jochemvangrondelle/subtitleflow.git
 cd subs
 
 python -m venv .venv

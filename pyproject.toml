@@ -1,0 +1,278 @@
+[project]
+name = "subtitleflow"
+version = "2.0.0"
+description = "AI-powered subtitle transcription, correction, and translation tool"
+authors = [
+    {name = "SubtitleFlow Team", email = "subtitleflow@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "PolyForm-Noncommercial-1.0.0"}
+dependencies = [
+    "ollama>=0.1.0",
+    "srt>=3.5.0",
+    "typer[all]>=0.9.0",
+    "rich>=13.0.0",
+    "langcodes==3.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "mypy>=1.5.0",
+    "ruff>=0.1.0",
+    "pyright>=1.1.0",
+    "pre-commit>=3.0.0",
+    "python-semantic-release>=9.0.0",
+]
+transcribe = [
+    "whisperx>=3.1.0",
+]
+
+[project.scripts]
+subtitleflow = "subtitleflow.cli.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatchling.build]
+packages = ["subtitleflow"]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "mypy>=1.5.0",
+    "ruff>=0.1.0",
+    "pyright>=1.1.0",
+    "pre-commit>=3.0.0",
+    "python-semantic-release>=9.0.0",
+]
+docs = [
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+transcribe = [
+    "whisperx>=3.1.0",
+]
+
+[tool.semantic_release]
+version_variable = "subtitleflow/__init__.py:__version__"
+version_toml = ["pyproject.toml:project.version"]
+build_command = "uv build"
+dist_path = "dist"
+upload_to_vcs_release = true
+upload_to_pypi = false  # Commented out in release.yml - set to true when ready for PyPI
+changelog_file = "CHANGELOG.md"
+commit_author = "semantic-release <semantic-release>"
+commit_message = "chore: release v{version} [skip ci]"
+major_on_zero = false
+prerelease_token = "rc"
+tag_commit = true
+hvcs = "github"
+branches = [
+    { name = "main", prerelease = false },
+    { name = "develop", prerelease = true, prerelease_token = "rc" },
+]
+
+[tool.semantic_release.changelog]
+exclude_commit_types = ["build", "ci", "docs", "style", "refactor", "test"]
+sections = [
+    ["breaking", "Breaking Changes"],
+    ["feature", "Features"],
+    ["fix", "Bug Fixes"],
+    ["perf", "Performance Improvements"],
+    ["security", "Security Fixes"],
+]
+
+[tool.semantic_release.changelog.environment]
+blocklist = ["skip ci", "skip changelog"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "ARG",   # flake8-unused-arguments
+    "SIM",   # flake8-simplify
+    "PTH",   # flake8-use-pathlib
+    "PL",    # pylint
+    "RUF",   # ruff-specific rules
+    "ERA",   # eradicate (commented code)
+    "PGH",   # pygrep-hooks
+    "PT",    # flake8-pytest-style
+    "Q",     # flake8-quotes
+    "RET",   # flake8-return
+    "RSE",   # flake8-raise
+    "S",     # flake8-bandit (security)
+    "T20",   # flake8-print
+    "TID",   # flake8-tidy-imports
+    "TCH",   # flake8-type-checking
+    "ASYNC1",  # flake8-async (TRIO was remapped to ASYNC1)
+    "PERF",  # Perflint
+    "FBT",   # flake8-boolean-trap
+    "ICN",   # flake8-import-conventions
+    "G",     # flake8-logging-format
+    "INP",   # flake8-no-pep420
+    "PIE",   # flake8-pie
+    "PYI",   # flake8-pyi
+    "PT",    # flake8-pytest (already included above)
+    "SLF",   # flake8-self
+    "SLOT",  # flake8-slots
+    "TRY",   # tryceratops
+    "FLY",   # flynt
+    "ANN",   # flake8-annotations
+    "ASYNC", # flake8-async
+    "BLE",   # flake8-blind-except
+    "B904",  # flake8-blind-except
+    "A",     # flake8-builtins
+    "COM",   # flake8-commas
+    "DTZ",   # flake8-datetimez
+    "T10",   # flake8-debugger
+    "EM",    # flake8-errmsg
+    "EXE",   # flake8-executable
+    "FA",    # flake8-future-annotations
+    "ISC",   # flake8-implicit-str-concat
+    "INT",   # flake8-gettext
+    "FURB",  # refurb
+    "LOG",   # flake8-logging
+]
+ignore = [
+    "E501",      # line too long (handled by formatter)
+    "B008",      # do not perform function calls in argument defaults
+    "PLR2004",   # magic value used in comparison (tests)
+    "COM812",    # Trailing comma missing
+    "ISC001",    # Implicitly concatenated string literals
+    "T201",      # print statements (allowed in CLI)
+    "TRY003",    # Avoid specifying long messages outside exception class
+    "PLR0913",   # Too many arguments (acceptable for CLI functions)
+    "FBT001",    # Boolean positional args (acceptable for CLI)
+    "G004",      # Logging f-strings (acceptable, more readable)
+    "S603",      # subprocess with untrusted input (trusted in our case)
+    "S607",      # Partial executable path (acceptable for python -m)
+    "BLE001",    # Blind exception catching (acceptable for scripts)
+    "TRY300",    # Consider else block (acceptable pattern)
+    "PTH123",    # Use Path.open() (acceptable, open() is fine)
+    "ANN201",    # Missing return type (acceptable for scripts)
+    "ANN002",    # Missing *args type (callback functions)
+    "ANN003",    # Missing **kwargs type (callback functions)
+    "ARG001",    # Unused kwargs (callback functions)
+    "B904",      # Raise without from (acceptable in some cases)
+    "PERF401",   # Manual list comprehension (acceptable)
+    "PLR0912",   # Too many branches (acceptable for complex logic)
+    "ANN401",    # Any type (acceptable for callbacks)
+    "F601",      # Multi-value repeated key (acceptable)
+    "PLC0415",   # Import outside top-level (lazy imports)
+    "TRY301",    # Raise within try (acceptable pattern)
+    "ERA001",    # Commented code (acceptable for documentation)
+    "FBT002",    # Boolean default value (acceptable)
+    "PLR0915",   # Too many statements (acceptable for CLI)
+    "RUF001",    # Ambiguous unicode (acceptable)
+    "S110",      # Try-except-pass (acceptable)
+    "S324",      # Insecure hash (acceptable for non-crypto use)
+    "SIM102",    # Collapsible if (acceptable)
+    "ARG002",    # Unused method argument (acceptable)
+    "FBT003",    # Boolean positional value in call (acceptable)
+    "TRY401",    # Redundant exception in logging.exception (acceptable, explicit is clearer)
+]
+# Complexity rules are now enforced - refactor large functions/classes
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/*" = ["ARG", "PLR2004", "S101", "ANN001", "ANN202", "SLF001"]  # Tests can be more lenient with annotations
+"scripts/*" = ["ANN201", "BLE001", "TRY300", "PTH123"]  # Scripts can be more lenient
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.8"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+no_implicit_optional = true
+check_untyped_defs = true
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = [
+    "srt",
+    "ollama",
+    "typer",
+    "rich.*",
+]
+ignore_missing_imports = true
+
+[tool.pyright]
+pythonVersion = "3.8"
+typeCheckingMode = "strict"
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnusedImport = true
+reportUnusedClass = true
+reportUnusedFunction = true
+reportUnusedVariable = true
+reportDuplicateImport = true
+reportPrivateUsage = true
+reportConstantRedefinition = true
+reportIncompatibleMethodOverride = true
+reportIncompatibleVariableOverride = true
+reportUnnecessaryIsInstance = true
+reportUnnecessaryCast = true
+reportUnnecessaryComparison = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "--cov=subtitleflow",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-fail-under=80",
+    "-v",
+    "--strict-markers",
+]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.coverage.run]
+source = ["subtitleflow"]
+omit = [
+    "tests/*",
+    "**/__pycache__/*",
+    "**/.*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

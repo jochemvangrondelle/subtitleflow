@@ -59,7 +59,7 @@ This project supports multiple deployment options:
 
 ```bash
 # Clone repository
-git clone https://github.com/jochemvangrondelle/subs.git
+git clone https://github.com/jochemvangrondelle/subtitleflow.git
 cd subs
 
 # Start services (Ollama + SubtitleFlow)
@@ -345,7 +345,7 @@ services:
 
 ```bash
 # Clone repository
-git clone https://github.com/jochemvangrondelle/subs.git
+git clone https://github.com/jochemvangrondelle/subtitleflow.git
 cd subs
 
 # Install with dev dependencies
@@ -424,16 +424,17 @@ See the [LICENSE](LICENSE) file for the full license text.
 ## 🙏 Acknowledgments
 
 - Built with [Ollama](https://ollama.com/) for local LLM inference
+- Uses [whisperx](https://github.com/m-bain/whisperX) for transcription
 - Uses [srt](https://github.com/cdown/srt) for subtitle file handling
 - Powered by [Typer](https://typer.tiangolo.com/) and [Rich](https://github.com/Textualize/rich) for CLI
 
 ## 🔗 Links
 
-- **Documentation**: [Read the Docs](https://subs.readthedocs.io)
-- **Issues**: [GitHub Issues](https://github.com/jochemvangrondelle/subs/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/jochemvangrondelle/subs/discussions)
+- **Documentation**: [Read the Docs](https://subtitleflow.readthedocs.io)
+- **Issues**: [GitHub Issues](https://github.com/jochemvangrondelle/subtitleflow/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/jochemvangrondelle/subtitleflow/discussions)
 
 ---
 
-**Version**: 2.0.0  
+**Version**: 2.0.0
 **Status**: ✅ Production Ready

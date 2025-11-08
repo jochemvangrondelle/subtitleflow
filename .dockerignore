@@ -1,0 +1,63 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info
+dist
+build
+
+# Virtual environments
+venv
+ENV
+env
+.venv
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+.tox
+
+# Documentation
+docs/_build
+site
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# Legacy files
+legacy/
+
+# Development files
+*.md
+!README.md
+TODO.md
+CLEANUP_SUMMARY.md
+
+# CI/CD
+.github
+
+# Local data
+data/
+output/
+cache/
+*.srt
+*.mp4
+*.mov
+*.mkv
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
