@@ -4,17 +4,12 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
-  jobs:
-    post_install:
+  commands:
+    pre_build:
+      - pip install --upgrade pip setuptools wheel
       - pip install uv
       - uv pip install -e ".[docs]"
 
 mkdocs:
   configuration: mkdocs.yml
-
-python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
+  fail_on_warning: false
