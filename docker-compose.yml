@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  ollama:
+    hostname: ollama
+    volumes:
+      - ollama_data:/root/.ollama
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    container_name: subtitleflow-ollama
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    networks:
+      - subtitleflow-network
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "ollama", "--version"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+
+  subtitleflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subtitleflow-app
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - subtitleflow-network
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./cache:/app/cache
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - LOG_LEVEL=INFO
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: ["tail", "-f", "/dev/null"]  # Keep container running
+
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subtitleflow-docs
+    networks:
+      - subtitleflow-network
+    volumes:
+      - ./docs:/app/docs
+      - ./mkdocs.yml:/app/mkdocs.yml
+      - ./site:/app/site
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "
+        uv pip install --system -e '.[docs]' &&
+        uv run mkdocs serve --dev-addr=0.0.0.0:8000
+      "
+
+volumes:
+  ollama_data:
+
+networks:
+  subtitleflow-network:
+    driver: bridge
+
