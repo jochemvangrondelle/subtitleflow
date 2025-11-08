@@ -22,7 +22,27 @@ LICENSE_HEADER = """# Copyright (c) 2025 SubtitleFlow Team
 
 def has_license_header(content: str) -> bool:
     """Check if file already has a license header."""
-    return "PolyForm Noncommercial License" in content[:500]
+    # Check for the key license text in the first 500 characters
+    if "PolyForm Noncommercial License" not in content[:500]:
+        return False
+    
+    # Also check for the copyright line to ensure it's a proper header
+    if "Copyright (c) 2025 SubtitleFlow Team" not in content[:500]:
+        return False
+    
+    # Check if the header is at the beginning (after optional shebang)
+    lines = content.split("\n")
+    start_idx = 0
+    if lines and lines[0].startswith("#!"):
+        start_idx = 1
+        if len(lines) > 1 and not lines[1].strip():
+            start_idx = 2
+    
+    # Check if the first non-shebang line is the copyright
+    if start_idx < len(lines) and "Copyright (c) 2025 SubtitleFlow Team" in lines[start_idx]:
+        return True
+    
+    return False
 
 
 def add_license_header(file_path: Path) -> bool:
@@ -34,8 +54,9 @@ def add_license_header(file_path: Path) -> bool:
         print(f"Error reading {file_path}: {e}", file=sys.stderr)
         return False
 
+    # Check if header already exists - if so, don't modify the file
     if has_license_header(content):
-        return False
+        return False  # Header exists, no changes needed
 
     # Skip if file starts with shebang
     lines = content.split("\n")
