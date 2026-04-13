@@ -19,7 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
+    "pytest-cov>=7.1.0",
     "pytest-mock>=3.11.0",
     "mypy>=1.5.0",
     "ruff>=0.1.0",
@@ -44,7 +44,7 @@ packages = ["subtitleflow"]
 [dependency-groups]
 dev = [
     "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
+    "pytest-cov>=7.1.0",
     "pytest-mock>=3.11.0",
     "mypy>=1.5.0",
     "ruff>=0.1.0",
