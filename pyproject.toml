@@ -54,7 +54,7 @@ dev = [
 ]
 docs = [
     "mkdocs-material>=9.0.0",
-    "mkdocstrings[python]>=0.24.0",
+    "mkdocstrings[python]>=0.30.1",
 ]
 transcribe = [
     "whisperx>=3.1.0",
