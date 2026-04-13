@@ -23,7 +23,7 @@ dev = [
     "pytest-mock>=3.11.0",
     "mypy>=1.5.0",
     "ruff>=0.1.0",
-    "pyright>=1.1.0",
+    "pyright>=1.1.408",
     "pre-commit>=3.0.0",
     "python-semantic-release>=9.0.0",
 ]
@@ -48,7 +48,7 @@ dev = [
     "pytest-mock>=3.11.0",
     "mypy>=1.5.0",
     "ruff>=0.1.0",
-    "pyright>=1.1.0",
+    "pyright>=1.1.408",
     "pre-commit>=3.0.0",
     "python-semantic-release>=9.0.0",
 ]
